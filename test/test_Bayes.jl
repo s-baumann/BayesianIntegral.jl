@@ -1,4 +1,4 @@
-using BayesianIntegral: bayesian_integral_exponential, bayesian_integral_exponential_log_likelihood, solve_for_weights_gaussian, RProp_params, train_with_RProp
+using BayesianIntegral
 using Distributions: Normal, MvNormal, pdf
 using LinearAlgebra: diagm
 using Statistics
