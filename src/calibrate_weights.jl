@@ -1,13 +1,6 @@
-
-function bayesian_integral_exponential_log_likelihood(y::Array{Float64,1}, K::Symmetric{Float64,Array{Float64,2}}, invK::Symmetric{Float64,Array{Float64,2}})
-    return -0.5 * transpose(y) * invK * y - 0.5 * log(det(K))
-end
-function bayesian_integral_exponential_log_likelihood(y::Array{Float64,1}, X::Array{Float64,2}, parameters::Array{Float64,1}, var::Float64 )
-    K = K_matrix(X , BayesianIntegral.gaussian_kernel , parameters, var )
-    invK = inv(K)
-    return bayesian_integral_exponential_log_likelihood(y, K, invK)
-end
-
+"""
+    RProp_params
+"""
 struct RProp_params
     eta_plus::Float64
     eta_minus::Float64
@@ -16,6 +9,10 @@ struct RProp_params
     Delta_0::Float64
 end
 
+"""
+    train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, w_0::Float64, w_i::Array{Float64,1}, MaxIter::Int, noise::Float64, params::RProp_params)
+Trains kriging hyperparameters with RProp.
+"""
 function train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, w_0::Float64, w_i::Array{Float64,1}, MaxIter::Int, noise::Float64, params::RProp_params)
     # And implementation of this paper https://pdfs.semanticscholar.org/aa65/042ae494455a14811927eb0574871d276454.pdf
     iter = 0
@@ -48,6 +45,10 @@ function train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, w_0::Float64
     return w_0, w_i
 end
 
+"""
+    sample(dim::Int, batch_size::Int, replace::Bool)
+This does sampling with or without replacement.
+"""
 function sample(dim::Int, batch_size::Int, replace::Bool)
     if replace
         rand(1:dim, batch_size)
@@ -56,7 +57,11 @@ function sample(dim::Int, batch_size::Int, replace::Bool)
     end
 end
 
-function solve_for_weights_gaussian(X::Array{Float64,2}, y::Array{Float64,1}, w_0::Float64, w_i::Array{Float64,1}, steps::Int, batch_size::Int, step_multiple::Float64, noise::Float64, seed::Int = 1988)
+"""
+    calibrate_by_ML_with_SGD(X::Array{Float64,2}, y::Array{Float64,1}, w_0::Float64, w_i::Array{Float64,1}, steps::Int, batch_size::Int, step_multiple::Float64, noise::Float64, seed::Int = 1988)
+This trains a kriging model by using maximum likelihood with stochastic gradient descent.
+"""
+function calibrate_by_ML_with_SGD(X::Array{Float64,2}, y::Array{Float64,1}, w_0::Float64, w_i::Array{Float64,1}, steps::Int, batch_size::Int, step_multiple::Float64, noise::Float64, seed::Int = 1988)
     Random.seed!(seed)
     nobs = length(y)
     ndims = length(w_i)

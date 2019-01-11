@@ -8,7 +8,7 @@ using Random
 standard_normal = Normal(0.0,1.0)
 
 # Integral of gaussian distribution should be 1.
-samples = 9
+samples = 29
 p(x) = 1.0
 X = Array{Float64,2}(undef,samples,1)
 X[:,1] =  collect(-2.0:(4.0/(samples-1)):2.0) #
@@ -20,7 +20,7 @@ covar = Array{Float64,2}(undef,1,1)
 covar[1,1] = 1.0
 covar = Symmetric(covar)
 noise = 0.2
-bayesian_integral_exponential( X, y , prob_means , covar, w_0, w_i, noise )
+integ = bayesian_integral_exponential( X, y , prob_means , covar, w_0, w_i, noise )
 
 # Integral in two dimensions
 samples = 25
