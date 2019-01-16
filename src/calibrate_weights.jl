@@ -73,14 +73,14 @@ function calibrate_by_ML_with_SGD(X::Array{Float64,2}, y::Array{Float64,1}, w_0:
         XSample = X[samples, :]
         ySample = y[samples]
         marginal_likelihood, K, invK = marginal_likelihood_gaussian_derivatives( XSample, ySample, ow_0, ow_i, noise )
-        likelihood = log_likelihood(ySample, K, invK)
+        likelihood = log_likelihood(ySample, K; invK = invK)
         #print("weights going in are ", ow_i, "and a likelihood of ", likelihood, " and marginals of ", marginal_likelihood, "\n")
 
         normalised_grad =  sign.(marginal_likelihood) .* ( abs.(marginal_likelihood) ./ (abs.(marginal_likelihood) .+ maximum(abs.(marginal_likelihood))) )
         nw_0 = ow_0 .* (1 .+ normalised_grad[1] .* step_multiple)
         nw_i = ow_i .* (1 .+ normalised_grad[2:(ndims+1)] .* step_multiple)
         marginal_likelihood, K, invK = marginal_likelihood_gaussian_derivatives( XSample, ySample, nw_0, nw_i, noise )
-        nlikelihood = log_likelihood(ySample, K, invK)
+        nlikelihood = log_likelihood(ySample, K; invK = invK)
         ow_i = nw_i
         #ow_0 = max(0.1,nw_0)
         #print("    going out is  ", ow_i, "and a likelihood of ", nlikelihood, " and marginals of ", marginal_likelihood, "\n")

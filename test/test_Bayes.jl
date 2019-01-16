@@ -20,7 +20,7 @@ covar = Array{Float64,2}(undef,1,1)
 covar[1,1] = 1.0
 covar = Symmetric(covar)
 noise = 0.2
-integ = bayesian_integral_exponential( X, y , prob_means , covar, w_0, w_i, noise )
+integ = bayesian_integral_gaussian_exponential( X, y , prob_means , covar, w_0, w_i, noise )
 
 # Integral in two dimensions
 samples = 25
@@ -34,7 +34,7 @@ w_i = repeat([10.0] , outer = dims)
 prob_means = repeat([0.0] , outer = dims)
 covar = diagm(0 => ones(dims))
 noise = 0.2
-bayesian_integral_exponential( X, y , prob_means , covar, w_0, w_i , noise )
+bayesian_integral_gaussian_exponential( X, y , prob_means , covar, w_0, w_i , noise )
 
 # In ten dimensinos
 samples = 50
@@ -48,7 +48,7 @@ w_i = repeat([10.0] , outer = dims)
 prob_means = repeat([0.0] , outer = dims)
 covar = Symmetric(diagm(0 => ones(dims)))
 noise = 0.2
-bayesian_integral_exponential( X, y , prob_means , covar, w_0, w_i , noise )
+bayesian_integral_gaussian_exponential( X, y , prob_means , covar, w_0, w_i , noise )
 
 ##### More complex cases #####
 # Now looking at a more complex one.
@@ -101,7 +101,7 @@ function compare_for_f(dims, bayesianAttempts = 0, paths = 0;  seed = 1988)
     w_i = repeat([1.0], outer = dims)
     prob_means = repeat([0.0], outer = dims)
     covar = Symmetric(diagm(0 => ones(dims)))
-    bayesian_val, bayesian_err = bayesian_integral_exponential( X, y , prob_means , covar, w_0, w_i, noise )
+    bayesian_val, bayesian_err = bayesian_integral_gaussian_exponential( X, y , prob_means , covar, w_0, w_i, noise )
 
     # Kriging with new weights
     steps = 2000
@@ -111,7 +111,7 @@ function compare_for_f(dims, bayesianAttempts = 0, paths = 0;  seed = 1988)
     like = bayesian_integral_exponential_log_likelihood( y , X, vcat(w_0,w_i), noise )
     nw_0, nw_i = solve_for_weights_gaussian(X, y, w_0, w_i, steps, batch_size, step_multiple, noise, seed)
     nlike = bayesian_integral_exponential_log_likelihood( y , X, vcat(nw_0,nw_i), noise )
-    nbayesian_val, nbayesian_err = bayesian_integral_exponential( X, y , prob_means , covar, nw_0, nw_i, noise )
+    nbayesian_val, nbayesian_err = bayesian_integral_gaussian_exponential( X, y , prob_means , covar, nw_0, nw_i, noise )
 
 
     # Kriging with new weights and RProp
@@ -119,7 +119,7 @@ function compare_for_f(dims, bayesianAttempts = 0, paths = 0;  seed = 1988)
     MaxIter = 2000
     nnw_0, nnw_i = train_with_RProp(X, y, w_0, w_i, MaxIter, noise, params)
     rproplikelihood = bayesian_integral_exponential_log_likelihood( y , X, vcat(nnw_0,nnw_i), noise )
-    rpropnbayesian_val, rpropnbayesian_err = bayesian_integral_exponential( X, y , prob_means , covar, nnw_0, nnw_i, noise )
+    rpropnbayesian_val, rpropnbayesian_err = bayesian_integral_gaussian_exponential( X, y , prob_means , covar, nnw_0, nnw_i, noise )
 
     # MC Integration
     if paths < 1
