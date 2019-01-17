@@ -158,5 +158,3 @@ f2_results = compare_for_f(2, 300)
 abs(f2_results.bayesian_val - f2_results.MC_integral) < 0.11
 #f10_results = compare_for_f(10, 200, 20000)
 #f20_results = compare_for_f(20, 2000, 2000)
-
-true

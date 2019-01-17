@@ -1,4 +1,4 @@
-using StuTrade
+using BayesianIntegral
 using Test
 
 # Run tests
