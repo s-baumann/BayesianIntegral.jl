@@ -4,8 +4,10 @@ using LinearAlgebra
 using Random
 
 include("integrate_given_hyperparameters.jl")
+export gaussian_kernel, marginal_gaussian_kernel, K_matrix
+export gaussian_kernel_hyperparameters, bayesian_integral_gaussian_exponential
+export marginal_likelihood_gaussian_derivatives, log_likelihood
 include("calibrate_weights.jl")
-export gaussian_kernel_hyperparameters
-export bayesian_integral_gaussian_exponential, marginal_likelihood_gaussian_derivatives, log_likelihood, calibrate_by_ML_with_SGD
-export bayesian_integral_exponential_log_likelihood, train_with_RProp, bayesian_integral_exponential
+export calibrate_by_ML_with_SGD, RProp_params, train_with_RProp
+
 end
