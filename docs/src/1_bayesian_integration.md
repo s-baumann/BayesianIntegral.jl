@@ -3,7 +3,7 @@
 This package implements Bayesian Integration as described  by Rasmussen & Ghahramani (2003) and before that by O'Hagan (1991). These both use Kriging techniques to map out a function. The function is then integrated using this kriging map together with a multivariate Gaussian distribution gives a mass at each point in the function.
 
 At present on an exponential kernel is supported and only a multivariate Gaussian distribution for assigning mass to various points in the function. Thus the bayesian\_integral\_gaussian\_exponential function is the only integration function in the package.
-The exponential kernel here is:
+The exponential kernel used is:
 
 $$\text{Cov}(f(x_p), f(x_q))=w_0e^{-\frac{1}{2}(\frac{x_p - x_q}{w_i})^2}$$
 
