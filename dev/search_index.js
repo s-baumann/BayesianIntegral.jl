@@ -13,15 +13,7 @@ var documenterSearchIndex = {"docs": [
     "page": "BayesianIntegral",
     "title": "BayesianIntegral",
     "category": "section",
-    "text": "This does Bayesian integration of functions of the form:int_x in Re^d f(x) g(x)Where d is the dimensionality of the space (so x is d dimensional), f(x) is the function of interest and g(x) is a pdf representing the density of each x value.This package uses the term Bayesian Integration to mean approximating a function with a kriging metamodel (aka a gaussian process model) and then integrating under it. A kriging metamodel has the nice feature that uncertainty about the nature of the function is explicitly modelled (unlike for instance a approximation with Chebyshev polynomials) and the Bayesian Integral uses this feature to give a Gaussian distribution representing the probabilities of various integral values. The output of the bayesianintegralgaussian_exponential function is the expectation and variance of this distribution."
-},
-
-{
-    "location": "#Contents-1",
-    "page": "BayesianIntegral",
-    "title": "Contents",
-    "category": "section",
-    "text": "pages = [\"index.md\",\n        \"1_bayesian_integration.md\",\n        \"2_training_hyperparameters.md\",\n        \"99_refs.md\"]\nDepth = 2"
+    "text": "This does Bayesian integration of functions of the form:int_x in Re^d f(x) g(x)Where d is the dimensionality of the space (so x is d dimensional), f(x) is the function of interest and g(x) is a pdf representing the density of each x value.This package uses the term Bayesian Integration to mean approximating a function with a kriging metamodel (aka a gaussian process model) and then integrating under it. A kriging metamodel has the nice feature that uncertainty about the nature of the function is explicitly modelled (unlike for instance a approximation with Chebyshev polynomials) and the Bayesian Integral uses this feature to give a Gaussian distribution representing the probabilities of various integral values. The output of the bayesian_integral_gaussian_exponential function is the expectation and variance of this distribution."
 },
 
 {
