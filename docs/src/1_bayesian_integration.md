@@ -5,10 +5,9 @@ This package implements Bayesian Integration as described  by Rasmussen & Ghahra
 At present on an exponential kernel is supported and only a multivariate Gaussian distribution for assigning mass to various points in the function. Thus the bayesian\_integral\_gaussian\_exponential function is the only integration function in the package.
 The exponential kernel used is:
 
-$$\text{Cov}(f(x_p), f(x_q))=w_0e^{-\frac{1}{2}(\frac{x_p - x_q}{w_i})^2}$$
+$$\text{Cov}(f(x^p), f(x^q))=w_0e^{-\frac{1}{2}(\sum_{i=1}^d\frac{x^p_i - x_i^q}{w_i})^2}$$
 
-
-In order to use this function hyperparameters for the Gaussian Kernel need to be input. This is done in the gaussian\_kernel\_hyperparameters structure. These hyperparameters can be trained with the functions in the next section of the documentation. For simplicity however we have all parameters being 1.0 in the example below:
+Where $$d$$ is the dimensionality of the space the points $$x^p$$ and $$x^q$$ are defined in. $$w_0$$ and $$w_i$$ are hyperparameters which need to be input. This is done in the gaussian\_kernel\_hyperparameters structure. These hyperparameters can be trained with the functions in the next section of the documentation. For simplicity however we have all parameters being 1.0 in the example below:
 ```
 using BayesianIntegral
 using Sobol
