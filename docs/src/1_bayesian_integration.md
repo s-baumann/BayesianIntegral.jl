@@ -2,13 +2,13 @@
 
 This package implements Bayesian Integration as described  by Rasmussen \& Ghahramani (2003) and before that by O'Hagan (1991). These both use Kriging techniques to map out a function. The function is then integrated using this kriging map together with a multivariate Gaussian distribution gives a mass at each point in the function.
 
-At present on an exponential kernel is supported and only a multivariate Gaussian distribution for assigning mass to various points in the function. Thus the bayesian_integral_gaussian_exponential function is the only integration function in the package.
+At present on an exponential kernel is supported and only a multivariate Gaussian distribution for assigning mass to various points in the function. Thus the bayesian\_integral\_gaussian\_exponential function is the only integration function in the package.
 The exponential kernel here is:
 
-$$\text{cov}(f(\mathbf{x_p}), f(\mathbf{x_q})) &= e^{-\frac{1}{2}\vert \mathbf{x_p} - \mathbf{x_q}\vert^2} $$
+$$\text{cov}(f(\mathbf{x_p}), f(\mathbf{x_q})) = e^{-\frac{1}{2}\vert \mathbf{x_p} - \mathbf{x_q}\vert^2} $$
 
 
-In order to use this function hyperparameters for the Gaussian Kernel need to be input. This is done in the gaussian_kernel_hyperparameters structure. These hyperparameters can be trained with the functions in the next section of the documentation. For simplicity however we have all parameters being 1.0 in the example below:
+In order to use this function hyperparameters for the Gaussian Kernel need to be input. This is done in the gaussian\_kernel\_hyperparameters structure. These hyperparameters can be trained with the functions in the next section of the documentation. For simplicity however we have all parameters being 1.0 in the example below:
 ```
 using BayesianIntegral
 using Sobol

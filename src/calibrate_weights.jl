@@ -13,7 +13,7 @@ end
     train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, w_0::Float64, w_i::Array{Float64,1}, MaxIter::Int, noise::Float64, params::RProp_params)
 Trains kriging hyperparameters with RProp.
 """
-function train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, cov_func_parameters::gaussian_kernel_hyperparameters, MaxIter::Int, noise::Float64, params::RProp_params)
+function calibrate_by_ML_with_Rprop(X::Array{Float64,2}, y::Array{Float64,1}, cov_func_parameters::gaussian_kernel_hyperparameters, MaxIter::Int, noise::Float64, params::RProp_params)
     # An implementation of this paper https://pdfs.semanticscholar.org/aa65/042ae494455a14811927eb0574871d276454.pdf
     iter = 0
     w_0 = cov_func_parameters.w_0
@@ -27,7 +27,7 @@ function train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, cov_func_par
         Deltas = Array{Float64,1}(undef, length(w_i)) .= params.Delta_0
         new_0_sign = sign(marginal_likelihood[1])
         new_i_signs = sign.(marginal_likelihood[2:length(marginal_likelihood)])
-        #w_0 = w_0 + new_0_sign*Delta0
+        w_0 = w_0 + new_0_sign*Delta0
         w_i = w_i .+ new_i_signs .* Deltas
         if iter > 0
             Delta0 = new_0_sign * old_0_sign > 0 ? Delta0*params.eta_plus : Delta0*params.eta_minus
@@ -38,7 +38,7 @@ function train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, cov_func_par
             end
         end
         if all(Deltas .< threshold)
-            return w_0, w_i
+            return gaussian_kernel_hyperparameters(w_0, w_i)
         end
         old_0_sign  = new_0_sign
         old_i_signs = new_i_signs
@@ -51,12 +51,8 @@ end
     sample(dim::Int, batch_size::Int, replace::Bool)
 This does sampling with or without replacement.
 """
-function sample(dim::Int, batch_size::Int, replace::Bool)
-    if replace
-        rand(1:dim, batch_size)
-    else
-        randperm(dim)[1:batch_size]
-    end
+function sample(dim::Int, batch_size::Int)
+    return randperm(dim)[1:batch_size]
 end
 
 """
@@ -70,7 +66,7 @@ function calibrate_by_ML_with_SGD(X::Array{Float64,2}, y::Array{Float64,1}, cov_
     ndims = length(ow_i)
     nobs = length(y)
     for s in 1:steps
-        samples = sample(nobs,batch_size, false)
+        samples = sample(nobs,batch_size)
         XSample = X[samples, :]
         ySample = y[samples]
         marginal_likelihood, K, invK = marginal_likelihood_gaussian_derivatives(XSample, ySample, gaussian_kernel_hyperparameters(ow_0, ow_i), noise)

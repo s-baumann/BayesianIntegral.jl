@@ -1,6 +1,6 @@
 # 2.0 Training Hyperparameters
 
-This package currently supports two ways of training hyperparameters. The first is
+This package currently supports two ways of training hyperparameters. The first is Maximum likelihood with stochastic gradient descent while the second uses a momentum based algorithm to maximise likelihood (Blum and Riedmiller 2013).
 
 ## 2.1 Maximum Likelihood with Stochastic Gradient Descent
 
@@ -24,9 +24,9 @@ new_cov_func_parameters = calibrate_by_ML_with_SGD(X, y, cov_func_parameters, st
 
 ## 2.2 RProp
 
+This technique also maximises Maximum Likelihood. The main difference is that rather than taking Newtonian steps towards an maximum, the Rprop algorithm ignores the magnitude of the marginal likelihood and looks only at the sign. It moves a small distance uphill towards a higher likelihood. If the slope is still positive at this new point it will speed up and step by a greater amount in this direction. If the sign of the gradient ever changes it will slow down. It is thus a momentum based optimiser.
 
-
-This function can be used in the following way:
+This is implemented with the calibrate\_by\_ML\_with\_Rprop function as below:
 ```
 old_cov_func_parameters = gaussian_kernel_hyperparameters(1.0, repeat([10.0] , outer = dims))
 params  = RProp_params(1.01,0.99,0.2,5.0,0.5)    # parameters for the RProp algorithm.

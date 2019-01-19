@@ -122,7 +122,7 @@ function compare_for_f(dims::Int, bayesianAttempts::Int = 0, paths::Int = 0;  se
     # Kriging with new weights and RProp
     params = RProp_params(1.01,0.99,0.2,5.0,0.5)
     MaxIter = 2000
-    nn_cov_func_parameters = train_with_RProp(X, y, cov_func_parameters, MaxIter, noise, params)
+    nn_cov_func_parameters = calibrate_by_ML_with_Rprop(X, y, cov_func_parameters, MaxIter, noise, params)
     K_mat = K_matrix(X, gaussian_kernel, n_cov_func_parameters, noise)
     rproplikelihood = log_likelihood(y, K_mat)
     rpropnbayesian_val, rpropnbayesian_err = bayesian_integral_gaussian_exponential(X, y , prob_means, covar, nn_cov_func_parameters, noise)
