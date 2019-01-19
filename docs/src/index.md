@@ -6,14 +6,4 @@ $\int_{x \in \Re^d} f(x) g(x)$
 
 Where $$d$$ is the dimensionality of the space (so $$x$$ is $$d$$ dimensional), $$f(x)$$ is the function of interest and $$g(x)$$ is a pdf representing the density of each $x$ value.
 
-This package uses the term Bayesian Integration to mean approximating a function with a kriging metamodel (aka a gaussian process model) and then integrating under it. A kriging metamodel has the nice feature that uncertainty about the nature of the function is explicitly modelled (unlike for instance a approximation with Chebyshev polynomials) and the Bayesian Integral uses this feature to give a Gaussian distribution representing the probabilities of various integral values. The output of the bayesian_integral_gaussian_exponential function is the expectation and variance of this distribution.
-
-## Contents
-
-```@contents
-pages = ["index.md",
-        "1_bayesian_integration.md",
-        "2_training_hyperparameters.md",
-        "99_refs.md"]
-Depth = 2
-```
+This package uses the term Bayesian Integration to mean approximating a function with a kriging metamodel (aka a gaussian process model) and then integrating under it. A kriging metamodel has the nice feature that uncertainty about the nature of the function is explicitly modelled (unlike for instance a approximation with Chebyshev polynomials) and the Bayesian Integral uses this feature to give a Gaussian distribution representing the probabilities of various integral values. The output of the bayesian\_integral\_gaussian\_exponential function is the expectation and variance of this distribution.
