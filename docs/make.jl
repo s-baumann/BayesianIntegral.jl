@@ -4,7 +4,10 @@ makedocs(
     format = Documenter.HTML(),
     sitename = "BayesianIntegral",
     modules = [BayesianIntegral],
-    pages = ["index.md"]
+    pages = ["index.md",
+            "1_bayesian_integration.md",
+            "2_training_hyperparameters.md",
+            "99_refs.md"]
 )
 
 deploydocs(

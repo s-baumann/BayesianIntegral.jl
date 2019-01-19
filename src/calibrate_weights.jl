@@ -14,7 +14,7 @@ end
 Trains kriging hyperparameters with RProp.
 """
 function train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, cov_func_parameters::gaussian_kernel_hyperparameters, MaxIter::Int, noise::Float64, params::RProp_params)
-    # And implementation of this paper https://pdfs.semanticscholar.org/aa65/042ae494455a14811927eb0574871d276454.pdf
+    # An implementation of this paper https://pdfs.semanticscholar.org/aa65/042ae494455a14811927eb0574871d276454.pdf
     iter = 0
     w_0 = cov_func_parameters.w_0
     w_i = cov_func_parameters.w_i
@@ -74,14 +74,9 @@ function calibrate_by_ML_with_SGD(X::Array{Float64,2}, y::Array{Float64,1}, cov_
         XSample = X[samples, :]
         ySample = y[samples]
         marginal_likelihood, K, invK = marginal_likelihood_gaussian_derivatives(XSample, ySample, gaussian_kernel_hyperparameters(ow_0, ow_i), noise)
-        likelihood = log_likelihood(ySample, K; invK = invK)
-
         normalised_grad =  sign.(marginal_likelihood) .* ( abs.(marginal_likelihood) ./ (abs.(marginal_likelihood) .+ maximum(abs.(marginal_likelihood))) )
-        nw_0 = ow_0 .* (1 .+ normalised_grad[1] .* step_multiple)
-        nw_i = ow_i .* (1 .+ normalised_grad[2:(ndims+1)] .* step_multiple)
-        marginal_likelihood, K, invK = marginal_likelihood_gaussian_derivatives(XSample, ySample, gaussian_kernel_hyperparameters(nw_0, nw_i), noise)
-        nlikelihood = log_likelihood(ySample, K; invK = invK)
-        ow_i = nw_i
+        ow_0 = ow_0 .* (1 .+ normalised_grad[1] .* step_multiple)
+        ow_i = ow_i .* (1 .+ normalised_grad[2:(ndims+1)] .* step_multiple)
     end
     return gaussian_kernel_hyperparameters(ow_0, ow_i)
 end
