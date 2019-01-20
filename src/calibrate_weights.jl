@@ -10,7 +10,7 @@ struct RProp_params
 end
 
 """
-    train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, w_0::Float64, w_i::Array{Float64,1}, MaxIter::Int, noise::Float64, params::RProp_params)
+    train_with_RProp(X::Array{Float64,2}, y::Array{Float64,1}, cov_func_parameters::gaussian_kernel_hyperparameters, MaxIter::Int, noise::Float64, params::RProp_params)
 Trains kriging hyperparameters with RProp.
 """
 function calibrate_by_ML_with_Rprop(X::Array{Float64,2}, y::Array{Float64,1}, cov_func_parameters::gaussian_kernel_hyperparameters, MaxIter::Int, noise::Float64, params::RProp_params)
@@ -56,7 +56,7 @@ function sample(dim::Int, batch_size::Int)
 end
 
 """
-    calibrate_by_ML_with_SGD(X::Array{Float64,2}, y::Array{Float64,1}, w_0::Float64, w_i::Array{Float64,1}, steps::Int, batch_size::Int, step_multiple::Float64, noise::Float64, seed::Int = 1988)
+    calibrate_by_ML_with_SGD(X::Array{Float64,2}, y::Array{Float64,1}, cov_func_parameters::gaussian_kernel_hyperparameters, steps::Int, batch_size::Int, step_multiple::Float64, noise::Float64, seed::Int = 1988)
 This trains a kriging model by using maximum likelihood with stochastic gradient descent.
 """
 function calibrate_by_ML_with_SGD(X::Array{Float64,2}, y::Array{Float64,1}, cov_func_parameters::gaussian_kernel_hyperparameters, steps::Int, batch_size::Int, step_multiple::Float64, noise::Float64, seed::Int = 1988)
