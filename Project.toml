@@ -1,5 +1,5 @@
 name = "BayesianIntegral"
-uuid = "170c7662-660e-5658-93f2-9369b3e86d75"
+uuid = "170c7662-660e-5658-93f2-9369b3e86d76"
 authors = ["Stuart Baumann <stuart@stuartbaumann.com>"]
 version = "0.1.0"
 
