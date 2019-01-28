@@ -9,7 +9,7 @@ This is done by the calibrate\_by\_ML\_with\_SGD function. The procedure is:
 * Find the likelihood of the dataset given the input hyperparameters. Also find the marginal likelihood (with respect to all hyperparameters) and use the Newtonian method to suggest another set of hyperparameters. The step to the new parameter set (as chosen by the Newtonian method) can be adjusted by the step\_multiple parameter.
 This process continues for a user-specifiable number of iterates.
 
-Note that using stochastic gradient descent is important here as the major time here is in inverting an $$N$$x$$N$$ matrix which has a complexity of about $$O(N^{2.3})$$. Thus if only 10\% of observations are used in each iterate this makes the calibration more than 100 times faster than using all observations.
+Note that using stochastic gradient descent is important here as the major time here is in inverting an $$N$$x$$N$$ matrix which has a complexity of about $$O(N^{2.3})$$. Thus if only 10% of observations are used in each iterate this makes the calibration more than 100 times faster than using all observations.
 
 This function can be used in the following way:
 ```
