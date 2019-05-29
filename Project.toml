@@ -1,7 +1,7 @@
 name = "BayesianIntegral"
 uuid = "170c7662-660e-5658-93f2-9369b3e86d75"
 authors = ["Stuart Baumann <stuart@stuartbaumann.com>"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
