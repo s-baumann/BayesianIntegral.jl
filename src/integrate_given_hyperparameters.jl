@@ -50,6 +50,19 @@ function K_matrix(X::AbstractArray{R,2}, cov_func::Function, cov_func_parameters
 end
 
 """
+    correlation_vector_of_a_point(x::AbstractArray{T,1},X::AbstractArray{R,2}, cov_func::Function, cov_func_parameters::gaussian_kernel_hyperparameters) where T<:Real where R<:Real
+This calculates the correlations of a point with each point in the X array.
+"""
+function correlation_vector_of_a_point(x::AbstractArray{T,1},X::AbstractArray{R,2}, cov_func::Function, cov_func_parameters::gaussian_kernel_hyperparameters) where T<:Real where R<:Real
+    NoObs = size(X)[1]
+    r = Array{R,1}(undef,NoObs )
+    for i in 1:NoObs
+        r[i] = cov_func(X[i,:], x, cov_func_parameters)
+    end
+    return r
+end
+
+"""
     K_matrix_with_marginals(X::Array{Float64,2}, cov_func::Function, cov_func_parameters::gaussian_kernel_hyperparameters, noise::Float64 = 0.0)
 Returns a K_matrix together with marginal K matrices (marginal over each hyperparameter)
 """
