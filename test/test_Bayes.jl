@@ -14,7 +14,7 @@ p(x) = 1.0
 X = Array{Float64,2}(undef,samples,1)
 X[:,1] =  collect(-2.0:(4.0/(samples-1)):2.0) #
 y = p.(X)[:,1]
-cov_func_parameters = gaussian_kernel_hyperparameters(1.0, repeat([2.0] , outer = dims))
+cov_func_parameters = GaussianKernelHyperparameters(1.0, repeat([2.0] , outer = dims))
 prob_means = [0.0]
 covar = Array{Float64,2}(undef,1,1)
 covar[1,1] = 1.0
@@ -30,7 +30,7 @@ p(x) = 1.0
 s = SobolSeq(dims)
 X = convert( Array{Float64}, hcat([next!(s, repeat([0.5] , outer = dims)     ) for i = 1:samples]...)' )
 y = repeat([1.0] , outer = samples)
-cov_func_parameters = gaussian_kernel_hyperparameters(1.0, repeat([10.0] , outer = dims))
+cov_func_parameters = GaussianKernelHyperparameters(1.0, repeat([10.0] , outer = dims))
 prob_means = repeat([0.0] , outer = dims)
 covar = Symmetric(diagm(0 => ones(dims)))
 noise = 0.2
@@ -44,7 +44,7 @@ p(x) = 1.0
 s = SobolSeq(dims)
 X = convert(Array{Float64}, hcat([next!(s, repeat([0.5] , outer = dims)     ) for i = 1:samples]...)')
 y = repeat([1.0] , outer = samples)
-cov_func_parameters = gaussian_kernel_hyperparameters(1.0, repeat([20.0] , outer = dims))
+cov_func_parameters = GaussianKernelHyperparameters(1.0, repeat([20.0] , outer = dims))
 prob_means = repeat([0.0] , outer = dims)
 covar = Symmetric(diagm(0 => ones(dims)))
 noise = 0.2
