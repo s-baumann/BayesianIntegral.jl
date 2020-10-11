@@ -1,6 +1,6 @@
 using BayesianIntegral
 using Distributions: Normal, MvNormal, pdf
-using LinearAlgebra: diagm, Symmetric
+using LinearAlgebra: diagm, Hermitian
 using Statistics
 using HCubature: hcubature
 using Sobol
@@ -18,7 +18,7 @@ cov_func_parameters = GaussianKernelHyperparameters(1.0, repeat([2.0] , outer = 
 prob_means = [0.0]
 covar = Array{Float64,2}(undef,1,1)
 covar[1,1] = 1.0
-covar = Symmetric(covar)
+covar = Hermitian(covar)
 noise = 0.2
 integ = bayesian_integral_gaussian_exponential(X, y, prob_means, covar, cov_func_parameters, noise)
 (integ.expectation - 1) < 0.01
@@ -32,7 +32,7 @@ X = convert( Array{Float64}, hcat([next!(s, repeat([0.5] , outer = dims)     ) f
 y = repeat([1.0] , outer = samples)
 cov_func_parameters = GaussianKernelHyperparameters(1.0, repeat([10.0] , outer = dims))
 prob_means = repeat([0.0] , outer = dims)
-covar = Symmetric(diagm(0 => ones(dims)))
+covar = Hermitian(diagm(0 => ones(dims)))
 noise = 0.2
 integ = bayesian_integral_gaussian_exponential(X, y, prob_means, covar, cov_func_parameters, noise)
 (integ.expectation - 1) < 0.02
@@ -46,7 +46,7 @@ X = convert(Array{Float64}, hcat([next!(s, repeat([0.5] , outer = dims)     ) fo
 y = repeat([1.0] , outer = samples)
 cov_func_parameters = GaussianKernelHyperparameters(1.0, repeat([20.0] , outer = dims))
 prob_means = repeat([0.0] , outer = dims)
-covar = Symmetric(diagm(0 => ones(dims)))
+covar = Hermitian(diagm(0 => ones(dims)))
 noise = 0.2
 integ = bayesian_integral_gaussian_exponential(X, y, prob_means, covar, cov_func_parameters, noise)
 (integ.expectation - 1) < 0.02
@@ -103,7 +103,7 @@ function compare_for_f(dims::Int, bayesianAttempts::Int = 0, paths::Int = 0;  se
     noise = 0.05
     cov_func_parameters = gaussian_kernel_hyperparameters(1.0, repeat([1.0] , outer = dims))
     prob_means = repeat([0.0], outer = dims)
-    covar = Symmetric(diagm(0 => ones(dims)))
+    covar = Hermitian(diagm(0 => ones(dims)))
     bayesian_val, bayesian_err = bayesian_integral_gaussian_exponential(X, y, prob_means, covar, cov_func_parameters, noise)
 
     # Kriging with new weights

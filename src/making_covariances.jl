@@ -39,7 +39,7 @@ function K_matrix(X::AbstractArray{R,2}, cov_func::Function, cov_func_parameters
         end
     end
     noise_matrix = noise * diagm(0 => ones(NoObs))
-    return Symmetric(KK + noise_matrix)
+    return Hermitian(KK + noise_matrix)
 end
 
 """
@@ -77,19 +77,19 @@ function K_matrix_with_marginals(X::AbstractArray{T,2}, cov_func::Function, cov_
             end
         end
     end
-    cov_mat = Symmetric(covar_matrix + noise * diagm(0 => ones(NoObs)) )
+    cov_mat = Hermitian(covar_matrix + noise * diagm(0 => ones(NoObs)) )
     for m in 1:number_of_marginal_matrices
-        mats[:,:,m] =  Symmetric(mats[:,:,m])
+        mats[:,:,m] =  Hermitian(mats[:,:,m])
     end
     return (k_mat = cov_mat,  marginal_K_matrices = mats)
 end
 
 """
-    log_likelihood( y::Array{Float64,1},  K::Symmetric{Float64,Array{Float64,2}}; invK::Symmetric{Float64,Array{Float64,2}} = inv(K), determinant = det(K))
+    log_likelihood( y::Array{Float64,1},  K::Hermitian{Float64,Array{Float64,2}}; invK::Hermitian{Float64,Array{Float64,2}} = inv(K), determinant = det(K))
 The log likelihood of a kriging model with values y and covariances K. invK and the determinant can be fed in as well to prevent additional operations.
 Note that the normalising constant is excluded from the log likelihood here because it is not relevent for optimising hyperparameters.
 """
-function log_likelihood(y::AbstractArray{T,1},  K::Symmetric; invK::Symmetric = inv(K), determinant::Real = det(K)) where T<:Real where R<:Real
+function log_likelihood(y::AbstractArray{T,1},  K::Hermitian; invK::Hermitian = inv(K), determinant::Real = det(K)) where T<:Real where R<:Real
     return -0.5 * transpose(y) * invK * y - 0.5 * log(determinant)
 end
 

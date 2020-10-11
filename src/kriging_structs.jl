@@ -29,20 +29,20 @@ struct KrigingModel{T<:Real}
     cov_func::Function
     noise::T
     # Now we have stuff that is calculated from the above. Saved in the model purely for efficiency reasons.
-    K::Symmetric{T}
-    invK::Symmetric{T}
+    K::Hermitian{T}
+    invK::Hermitian{T}
     mu::T
     sigma2::T
     y_m_mu::Array{T,1}
     function KrigingModel(X::AbstractArray{T,2}, f::AbstractArray{R,1}, hyper::GaussianKernelHyperparameters{S};
                           cov_func::Function = gaussian_kernel, noise::U = 1000*eps(),
-                          K::Symmetric{W} = K_matrix(X, cov_func, hyper, noise), invK::Symmetric{Z} = LinearAlgebra.inv(K)) where T<:Real where R<:Real where S<:Real where U<:Real where W<:Real where Z<:Real
+                          K::Hermitian{W} = K_matrix(X, cov_func, hyper, noise), invK::Hermitian{Z} = LinearAlgebra.inv(K)) where T<:Real where R<:Real where S<:Real where U<:Real where W<:Real where Z<:Real
             tt = promote_type(T, R, S, U, W, Z)
 
             dim = size(invK)[1]
             mu = tt(sum(invK * f) / sum(invK * ones(dim)))
             y_m_mu = f .- mu
             sigma2 = tt((y_m_mu' * (invK * y_m_mu)) / dim)
-            return new{tt}(Array{tt,2}(X), Array{tt,1}(f), GaussianKernelHyperparameters{tt}(hyper) , cov_func, tt(noise), LinearAlgebra.Symmetric(Array{tt,2}(K)), LinearAlgebra.Symmetric(Array{tt,2}(invK)), mu, sigma2, y_m_mu)
+            return new{tt}(Array{tt,2}(X), Array{tt,1}(f), GaussianKernelHyperparameters{tt}(hyper) , cov_func, tt(noise), LinearAlgebra.Hermitian(Array{tt,2}(K)), LinearAlgebra.Hermitian(Array{tt,2}(invK)), mu, sigma2, y_m_mu)
     end
 end

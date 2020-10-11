@@ -28,7 +28,7 @@ cov_func_parameters = gaussian_kernel_hyperparameters(1.0, repeat([10.0] , outer
 # Now we create a vector of means and a covariance matrix for the multivariate normal distribution describing the
 # probability mass at each point in the function.
 prob_means = repeat([0.0] , outer = dims)
-covar = Symmetric(diagm(0 => ones(dims)))
+covar = Hermitian(diagm(0 => ones(dims)))
 # Some noise can be added to the function values. If a function is deterministic then no noise exists but a small
 # amount can avoid issues with numerical imprecision.
 noise = 0.001

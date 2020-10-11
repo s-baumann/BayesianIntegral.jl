@@ -44,8 +44,8 @@ modl = KrigingModel(X, y, calibrated_parameters; noise  = noise)
 xx = get_next_query_point_through_expected_improvement(modl)
 
 # Testing integral
-dist = MultivariateNormal([0.5,0.5], Symmetric([1.0 0.0; 0.0 1.0]))
-int = integrate(modl, [0.5,0.5], Symmetric([1.0 0.0; 0.0 1.0])).expectation
+dist = MultivariateNormal([0.5,0.5], Hermitian([1.0 0.0; 0.0 1.0]))
+int = integrate(modl, [0.5,0.5], Hermitian([1.0 0.0; 0.0 1.0])).expectation
 samples = 100000
 numerical_int = zeros(samples)
 for i in 1:samples
