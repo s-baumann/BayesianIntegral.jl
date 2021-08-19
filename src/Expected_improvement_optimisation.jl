@@ -12,7 +12,6 @@ function get_next_query_point_through_expected_improvement(modl::KrigingModel, l
     return opt.minimizer
 end
 
-
 function get_predicted_minimum(modl::KrigingModel, lower =  repeat([0.0], size(modl.X)[2]), upper = repeat([1.0], size(modl.X)[2]) )
     opt = optimize(x -> -modl(x).value, lower, upper, (lower .+ upper) ./ 2, SAMIN(), Optim.Options(iterations = 10000))
     return opt.minimizer
