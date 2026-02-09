@@ -7,6 +7,7 @@ makedocs(
     pages = ["index.md",
             "1_bayesian_integration.md",
             "2_training_hyperparameters.md",
+            "3_api_reference.md",
             "99_refs.md"]
 )
 
